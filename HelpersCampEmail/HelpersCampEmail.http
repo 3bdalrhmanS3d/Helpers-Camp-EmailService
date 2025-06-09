@@ -1,0 +1,6 @@
+@HelpersCampEmail_HostAddress = http://localhost:5238
+
+GET {{HelpersCampEmail_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
