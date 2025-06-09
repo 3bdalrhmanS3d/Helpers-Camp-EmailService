@@ -106,7 +106,7 @@ namespace HelpersCampEmail.Service
             {
                 _context.EmailLogs.Add(new EmailLog
                 {
-                    Id = existing.Id,
+                    ApplicantId = existing.Id,
                     SentAt = result.TimestampUtc,
                     Success = result.Success,
                     ErrorMessage = result.ErrorMessage

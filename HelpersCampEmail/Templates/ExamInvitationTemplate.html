@@ -1,46 +1,99 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Your Exam Invitation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوتك للاختبار النهائي</title>
+    <style type="text/css">
+        /* Reset and mobile-friendly styles */
+        body, table, td, a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* Responsive styles */
+        @media only screen and (max-width: 600px) {
+            .wrapper {
+                width: 100% !important;
+            }
+
+            .responsive-img {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .padding {
+                padding: 15px !important;
+            }
+
+            .hide-mobile {
+                display: none !important;
+            }
+
+            .full-width {
+                width: 100% !important;
+            }
+        }
+    </style>
 </head>
-<body style="margin:0; padding:0; background-color:#f4f4f4;">
+<body style="margin:0; padding:0; background-color:#f4f4f4; direction:rtl; text-align:right;">
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4; padding:20px 0;">
         <tr>
             <td align="center">
-                <table width="600" cellpadding="0" cellspacing="0"
-                       style="background-color:#ffffff; border-radius:8px; overflow:hidden; font-family:Arial, sans-serif;">
+                <table class="wrapper full-width" width="600" cellpadding="0" cellspacing="0"
+                       style="background-color:#ffffff; border-radius:8px; overflow:hidden; font-family:Arial, sans-serif; direction:rtl; text-align:right; max-width:600px;">
 
                     <!-- Header -->
                     <tr>
                         <td style="text-align:center; background-color:#ffffff;">
-                            <img src="{{HeaderURL}}"
-                                 alt="Helpers Assuit Community"
+                            <img class="responsive-img" src="{{HeaderURL}}"
+                                 alt="مجتمع هيلبرز أسيوط"
                                  width="600"
-                                 style="display:block; margin:0; border:none; outline:none;">
+                                 style="display:block; margin:0; border:none; outline:none; width:100%; max-width:600px; height:auto;">
                         </td>
                     </tr>
 
                     <!-- Body -->
                     <tr>
-                        <td style="padding:30px; color:#333333; line-height:1.6;">
-                            <h2 style="color:#0b2e89; margin-top:0;">Hello {{Name}},</h2>
+                        <td class="padding" style="padding:30px; color:#333333; line-height:1.6;">
+                            <h2 style="color:#0b2e89; margin-top:0;">مرحبًا {{Name}}،</h2>
 
-                            <p>🎉 <strong>Congratulations!</strong> 🎉</p>
-                            <p>You’ve successfully passed the filtering stage and are now invited to take the final exam.</p>
+                            <p>🎉 <strong>تهانينا!</strong> 🎉</p>
+                            <p>لقد نجحت في مرحلة الفرز بنجاح، وندعوك الآن لخوض الاختبار النهائي.</p>
 
                             <p>
-                                <strong>📅 Exam Date:</strong> 11 June 2025<br>
-                                <strong>🕐 Available:</strong> All day until 11:59 PM<br>
-                                <strong>🔗 Exam Link:</strong>
+                                <strong>📅 تاريخ الاختبار:</strong> 11 يونيو 2025<br>
+                                <strong>🕐 التوقيت:</strong> متاح طوال اليوم وحتى الساعة 11:59 مساءً<br>
+                                <strong>🔗 رابط الاختبار:</strong>
                                 <a href="{{ExamLink}}"
                                    style="color:#0b2e89; text-decoration:none;" target="_blank">
-                                    Click here to join
+                                    اضغط هنا للدخول
                                 </a>
                             </p>
 
                             <p>
-                                <strong>🔑 Your Registration Code:</strong><br>
+                                <strong>🔑 رمز التسجيل الخاص بك:</strong><br>
                                 <span style="display:inline-block; background-color:#0b2e89;
                                              color:#ffffff; padding:8px 12px; border-radius:4px;
                                              font-family:monospace; font-size:16px;">
@@ -50,20 +103,20 @@
 
                             <hr style="margin:25px 0; border:none; border-top:1px solid #ddd;">
 
-                            <h4 style="margin-bottom:10px; color:#0b2e89;">⚠️ Important Instructions</h4>
-                            <ul style="padding-left:20px;">
-                                <li>📌 The exam is available all day on 11 June 2025, until midnight.</li>
-                                <li>🚫 Cheating or copying is strictly prohibited.</li>
-                                <li>❓ If you're unsure about a question, it's okay to leave it blank — no need to guess.</li>
-                                <li>🔑 Make sure to enter your registration code exactly as shown to avoid losing marks.</li>
-                                <li>📬 For any issues or questions, feel free to contact the training team using the links below.</li>
+                            <h4 style="margin-bottom:10px; color:#0b2e89;">⚠️ تعليمات مهمة</h4>
+                            <ul style="padding-right:20px; padding-left:0; list-style-position:inside;">
+                                <li>📌 الاختبار متاح طوال يوم 11 يونيو 2025 وحتى منتصف الليل.</li>
+                                <li>🚫 يمنع الغش أو النسخ بأي شكل من الأشكال.</li>
+                                <li>❓ إذا لم تكن واثقًا من إجابة، يمكنك تركها دون تعبئة—لا حاجة للتخمين.</li>
+                                <li>🔑 تأكد من إدخال رمز التسجيل بالضبط كما هو لتفادي فقدان النقاط.</li>
+                                <li>📬 لأي استفسارات أو مشاكل، تواصل مع فريق التدريب عبر الروابط أدناه.</li>
                             </ul>
 
-                            <p>We wish you the best of luck, and we’re excited to see your performance!</p>
+                            <p>نتمنى لك كل التوفيق، ونحن متحمسون لرؤية أدائك!</p>
 
                             <p>
-                                Kind regards,<br>
-                                <strong>The Helpers Assuit Community Team</strong>
+                                تحياتنا الحارة،<br>
+                                <strong>فريق مجتمع هيلبرز أسيوط</strong>
                             </p>
                         </td>
                     </tr>
@@ -73,18 +126,18 @@
                         <td style="background-color:#0b2e89; padding:15px; text-align:center; color:#ffffff; font-size:12px;">
                             <p style="margin:5px 0;">
                                 <a href="https://www.facebook.com/share/1AW6CKZv3B/" style="color:#ffffff; text-decoration:none;" target="_blank">
-                                    Facebook
+                                    فيسبوك
                                 </a> |
                                 <a href="https://www.linkedin.com/company/the-helpers-ac/" style="color:#ffffff; text-decoration:none;" target="_blank">
-                                    LinkedIn
+                                    لينكدإن
                                 </a> |
                                 <a href="https://t.me/HelpersAU" style="color:#ffffff; text-decoration:none;" target="_blank">
-                                    Telegram
+                                    تيليجرام
                                 </a>
                             </p>
                             <p style="margin:8px 0 0;">
-                                © 2025 Helpers Assuit Community — All rights reserved.<br>
-                                <a href="#" style="color:#ffffff; text-decoration:underline;">Unsubscribe</a>
+                                © 2025 مجتمع هيلبرز أسيوط — جميع الحقوق محفوظة.<br>
+                                <a href="#" style="color:#ffffff; text-decoration:underline;">إلغاء الاشتراك</a>
                             </p>
                         </td>
                     </tr>

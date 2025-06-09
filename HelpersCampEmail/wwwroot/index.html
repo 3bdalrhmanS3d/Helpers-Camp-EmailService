@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Helpers Email Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #0b2e89;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0b2e89;
+            color: white;
+        }
+
+        input[type="text"] {
+            padding: 6px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📨 Helpers Email Dashboard</h1>
+
+    <div>
+        <button onclick="sendAll()">📤 Send All Unsent</button>
+        <button onclick="refreshStats()">🔄 Refresh Stats</button>
+        <br>
+        <input type="text" id="searchInput" placeholder="Search name/email/code..." oninput="search()" />
+    </div>
+
+    <div id="stats" style="margin-top: 20px;"></div>
+
+    <table id="statusTable">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Sent?</th>
+                <th>Last Sent</th>
+                <th>Send</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+    const api = 'http://localhost:5147/api'; // ⚠️ adjust if needed
+
+    async function sendAll() {
+      if (!confirm('Are you sure you want to send to all unsent trainees?')) return;
+      const res = await fetch(`${api}/email/send`, { method: 'POST' });
+      const data = await res.json();
+      alert(`Sent ${data.filter(d => d.success).length} emails.`);
+      loadData(); refreshStats();
+    }
+
+    async function sendSingle(email) {
+      const row = document.querySelector(`tr[data-email="${email}"]`);
+      const name = row.dataset.name;
+      const code = row.dataset.code;
+      const body = { email, fullName: name, accepted: true, code };
+      const res = await fetch(`${api}/email/send-single`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const result = await res.json();
+      alert(result.success ? `Sent to ${email}` : `Error: ${result.errorMessage}`);
+      loadData(); refreshStats();
+    }
+
+    async function refreshStats() {
+      const res = await fetch(`${api}/applicants/statistics`);
+      const s = await res.json();
+      document.getElementById('stats').innerHTML = `
+        <strong>📊 Statistics:</strong> Total: ${s.totalApplicants}, Sent: ${s.sentCount}, Not Sent: ${s.notSentCount}
+      `;
+    }
+
+    async function loadData(keyword = '') {
+      const res = await fetch(`${api}/applicants/search?keyword=${encodeURIComponent(keyword)}`);
+      const rows = await res.json();
+      const tbody = document.querySelector('#statusTable tbody');
+      tbody.innerHTML = '';
+      rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.dataset.email = r.email;
+        tr.dataset.name = r.fullName;
+        tr.dataset.code = r.code;
+        tr.innerHTML = `
+          <td>${r.code}</td>
+          <td>${r.fullName}</td>
+          <td>${r.email}</td>
+          <td>${r.status}</td>
+          <td>${r.sent ? '✅' : '❌'}</td>
+          <td>${r.lastSentAt ? new Date(r.lastSentAt).toLocaleString() : '-'}</td>
+          <td><button onclick="sendSingle('${r.email}')">Send</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function search() {
+      const value = document.getElementById('searchInput').value;
+      loadData(value);
+    }
+
+    // Init
+    loadData();
+    refreshStats();
+    </script>
+</body>
+</html>
