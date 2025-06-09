@@ -197,5 +197,118 @@ namespace HelpersCampEmail.Controllers
             return Ok(results);
         }
 
+        [HttpDelete("DeleteAll")]
+        public async Task<IActionResult> DeleteAll()
+        {
+            var applicants = await _context.Applicants.ToListAsync();
+            var emailLogs = await _context.EmailLogs.ToListAsync();
+            _context.Applicants.RemoveRange(applicants);
+            _context.EmailLogs.RemoveRange(emailLogs);
+            await _context.SaveChangesAsync();
+            return Ok(new { Message = "All applicants and email logs deleted successfully." });
+        }
+
+        [HttpGet("history")]
+        public async Task<ActionResult> GetHistory()
+        {
+            var history = await _context.EmailLogs
+                .Include(e => e.Applicant)
+                .Select(e => new
+                {
+                    e.Applicant.FullName,
+                    e.Applicant.Email,
+                    e.SentAt,
+                    e.Success,
+                    e.ErrorMessage
+                })
+                .OrderByDescending(e => e.SentAt)
+                .ToListAsync();
+            return Ok(history);
+
+        }
+
+        [HttpPost("AddTrainee")]
+        public async Task<IActionResult> AddTrainee([FromBody] AddTraineeDto dto)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool exists = await _context.Applicants
+                .AnyAsync(a => a.Email == dto.Email || a.Code == dto.Code);
+
+            if (exists)
+                return Conflict(new { Message = "Intern with the same mail or code pre-exists." });
+
+            var trainee = new Trainee
+            {
+                Code = dto.Code,
+                Email = dto.Email,
+                FullName = dto.FullName,
+                Status = dto.Status,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Applicants.Add(trainee);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                nameof(GetTraineeById),
+                new { id = trainee.Id },
+                new
+                {
+                    Message = "The trainee has been added successfully.",
+                    Trainee = new
+                    {
+                        trainee.Id,
+                        trainee.Code,
+                        trainee.Email,
+                        trainee.FullName,
+                        trainee.Status,
+                        trainee.CreatedAt
+                    }
+                }
+            );
+        }
+
+
+        [HttpGet("{id:int}", Name = nameof(GetTraineeById))]
+        public async Task<IActionResult> GetTraineeById(int id)
+        {
+            var t = await _context.Applicants.FindAsync(id);
+            if (t == null) return NotFound();
+            return Ok(t);
+        }
+        
+
+        [HttpGet("GetTrainees")]
+        public async Task<ActionResult<IEnumerable<Trainee>>> GetTrainees()
+        {
+            var trainees = await _context.Applicants
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Code,
+                    t.FullName,
+                    t.Email,
+                    t.Status,
+                    t.CreatedAt
+                })
+                .ToListAsync();
+            return Ok( trainees );
+        }
+
+        [HttpPut("edit-email")]
+        public async Task<IActionResult> EditTraineeEmail([FromBody] UpdateTraineeEmailDto dto)
+        {
+            // dto.Code and dto.NewMail come from the JSON body.
+            var trainee = await _context.Applicants.SingleOrDefaultAsync(t => t.Code == dto.Code);
+            if (trainee == null) return NotFound();
+
+            trainee.Email = dto.NewMail;
+            await _context.SaveChangesAsync();
+            return Ok(new { Message = "Email updated successfully.", Trainee = trainee });
+        }
+
     }
 }

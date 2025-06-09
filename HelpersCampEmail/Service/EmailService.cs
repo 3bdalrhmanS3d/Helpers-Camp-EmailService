@@ -124,7 +124,7 @@ namespace HelpersCampEmail.Service
                 .Replace("{{Name}}", t.FullName.Split(' ')[0])
                 .Replace("{{Code}}", t.Code)
                 .Replace("{{HeaderURL}}", "https://drive.google.com/uc?export=view&id=1t2of4TFhRtKEoS9Ji5GM1Sknekdqhm4w")
-                .Replace("{{ExamLink}}", "https://link.to/your/exam"); // ضع الرابط الحقيقي هنا
+                .Replace("{{ExamLink}}", "https://forms.gle/jqDMZ83C73UYhZJv6");
 
             var msg = new MimeMessage();
             msg.From.Add(new MailboxAddress("Helpers Assuit Community", _smtp.Email));
