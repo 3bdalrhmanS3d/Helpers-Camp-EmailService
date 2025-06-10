@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration;
 
-namespace HelpersCampEmail.Models
+namespace HelpersCampEmail.DTOs
 {
     public class ApplicantDto
     {

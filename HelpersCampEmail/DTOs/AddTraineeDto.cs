@@ -1,4 +1,4 @@
-﻿namespace HelpersCampEmail.Models
+﻿namespace HelpersCampEmail.DTOs
 {
     public class AddTraineeDto
     {

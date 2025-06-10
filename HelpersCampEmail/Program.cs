@@ -4,6 +4,7 @@ using HelpersCampEmail.Service;
 using HelpersCampEmail.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using HelpersCampEmail.Repositories;
 
 
 namespace HelpersCampEmail
@@ -20,6 +21,7 @@ namespace HelpersCampEmail
             // Add services to the container.
             builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
             builder.Services.Configure<CsvSettings>(builder.Configuration.GetSection("Csv"));
+            builder.Services.AddScoped<IApplicantRepository, ApplicantRepository>();
 
             builder.Services.AddTransient<IEmailService, EmailService>();
             builder.Services.AddControllers();
